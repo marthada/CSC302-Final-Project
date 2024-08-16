@@ -1,0 +1,25 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+     
+
+df = pd.read_csv('/content/drive/EmployeeData.csv')
+#df.head()
+     
+
+sns.set_style("whitegrid")
+colors = ["#e23717", "#6e041c"]
+plt.subplots(figsize=(16, 8))
+ax = sns.violinplot(data=df, x=df.Department, y=df.DistanceFromHome, hue=df.Attrition, 
+                    palette=colors, cut=0, split=True, inner="quartile")
+
+plt.title(label="Employee Commute Distance by Department and Attrition",
+          fontsize=22,
+          color="black",  weight='bold')
+
+ax.set_ylabel('Drive Time in Minutes',fontsize = 18,  weight='bold')
+ax.set_xlabel('Department',fontsize = 18,  weight='bold')
+plt.xticks(fontsize = 14)
+plt.yticks(fontsize = 14, weight='bold')
+plt.legend(fontsize=18, loc='upper left', bbox_to_anchor=(1.02, 1), title='Attrition',title_fontsize=18)
