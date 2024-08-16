@@ -1,0 +1,18 @@
+!pip install joypy # Install the joypy library
+import joypy # Import the joypy library
+import matplotlib.pyplot as plt
+import pandas as pd # Import pandas to work with DataFrames
+%matplotlib inline
+
+# Load your data into a pandas DataFrame called 'df'
+# For example, if your data is in a CSV file:
+df = pd.read_csv('/content/drive/MyDrive/EmployeeData.csv') 
+
+plt.figure()
+plt.style.use('dark_background')
+ax, fig = joypy.joyplot( # Use joypy.joyplot
+    data = df[['TrainingTimesLastYear', 'YearsAtCompany', 'PercentSalaryHike']],
+    by = 'TrainingTimesLastYear', legend=True,
+    colormap=plt.cm.Pastel1  # Use a colormap with pink and yellow hues
+)
+plt.title('Years with Company and Salary Increase by Time Training', fontsize=20, color='white', alpha=0.9)
