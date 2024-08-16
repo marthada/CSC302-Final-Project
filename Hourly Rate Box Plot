@@ -1,0 +1,25 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+     
+
+df = pd.read_csv('/content/drive/EmployeeData.csv')
+df.head()
+     
+
+plt.subplots(figsize=(16, 8))
+colors = ["#6e041c", "#5fccc3"]
+sns.set_style("whitegrid")
+ax = sns.boxplot(data=df, x=df.Department, y=df.HourlyRate, hue=df.Gender, 
+                 dodge=True, palette=colors,boxprops=dict(saturation=.6)) 
+
+plt.title(label="Employee Hourly Rate by Department and Gender",
+          fontsize=28,
+          color="black",  weight='bold')
+ax.yaxis.set_major_formatter('${x:1.0f}')
+ax.set_ylabel('Employee Hourly Pay Rate',fontsize = 18,  weight='bold')
+ax.set_xlabel('Department',fontsize = 18,  weight='bold')
+plt.xticks(fontsize = 14)
+plt.yticks(fontsize = 14)
+plt.legend(fontsize=18, loc='upper left', bbox_to_anchor=(1.02, 1))
