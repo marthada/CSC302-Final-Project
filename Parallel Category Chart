@@ -1,0 +1,55 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
+from plotly.graph_objs.layout import title
+
+df = pd.read_csv('/content/drive/MyDrive/EmployeeData.csv')
+#df.head()
+#df.dtypes
+conditions = [
+    (df['HourlyRate'] <= 48),
+    (df['HourlyRate'] >= 49) & (df['HourlyRate'] <= 66),
+    (df['HourlyRate'] >= 67) & (df['HourlyRate'] <= 84),
+    (df['HourlyRate'] >= 85)
+    ]
+
+
+values = ['tier_1', 'tier_2', 'tier_3', 'tier_4']
+
+df['HourlyPayTier'] = np.select(conditions, values)
+#df=df[df.HourlyPayTier.notnull()]
+
+df.to_csv('/content/drive/MyDrive/testoutput.csv')
+
+job_satis = go.parcats.Dimension(
+    values=df.JobSatisfaction,
+    categoryarray=[1, 2, 3, 4], label="Job Satisfaction",
+     ticktext=['Low', 'Medium', 'High', 'Very High'])
+
+wl_balance = go.parcats.Dimension(
+    values=df.WorkLifeBalance,
+   categoryarray=[1, 2, 3, 4], label="Work Life Balance",  ticktext=['Bad','Good','Better','Best'])
+
+hourly_pay = go.parcats.Dimension(
+    values=df.HourlyPayTier,
+categoryarray=['tier_1', 'tier_2', 'tier_3', 'tier_4'],
+label="Hourly Pay Tier",
+ticktext=['48', "66", "84", "100"]) # Fixed indentation here
+                                                           
+color = df.JobSatisfaction;
+colorscale =('RdYlBu');
+
+fig = go.Figure(data = [go.Parcats(dimensions=[job_satis, wl_balance, hourly_pay],
+        line={'color': color, 'colorscale': colorscale},
+        hoveron='color', hoverinfo='count+probability',
+        labelfont={'size': 20, 'family': 'Arial Black'},
+        tickfont={'size': 18, 'family': 'Arial Black'},
+        arrangement='fixed')]
+    )
+fig.update_layout(title_text='Employee Job Satisfaction based on Work/Life Balance and Pay',
+                    title_font_family="Arial Black",
+                    title_font_size=30) # Fixed indentation here
+                
+fig.show()
