@@ -1,0 +1,19 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+     
+
+df = pd.read_csv('/content/drive/MyDrive/EmployeeData.csv')
+#df.head()
+     
+
+sns.set_style("whitegrid")
+g = sns.FacetGrid(df, col="MaritalStatus",  row="Attrition", hue='Gender',palette=("rocket"))
+g.map(sns.kdeplot, "Age",fill=True)
+titles = ['Single | Former Employees','Married | Former Employees', 'Divorced | Former Employees', 
+          'Single | Current Employees','Married | Current Employees', 'Divorced | Current Employees']
+for ax,title in zip(g.axes.flatten(),titles):
+     ax.set_title(title )
+g.add_legend(fontsize=18, loc='upper right',title_fontsize=14)
+     
