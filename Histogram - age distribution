@@ -1,0 +1,8 @@
+import matplotlib.pyplot as plt
+
+# Assuming 'df' is your DataFrame containing employee data
+plt.hist(df['Age'], bins=50)
+plt.xlabel('Age')
+plt.ylabel('Number of Employees')
+plt.title('Distribution of Employee Ages')
+plt.show()
